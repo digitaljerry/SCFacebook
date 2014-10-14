@@ -22,6 +22,7 @@
 @property (strong, nonatomic) UIActionSheet *openGraphSheet;
 @property (strong, nonatomic) UIActionSheet *pageSheet;
 @property (strong, nonatomic) UIActionSheet *albumSheet;
+@property (strong, nonatomic) UIActionSheet *eventSheet;
 
 @end
 
@@ -61,6 +62,7 @@
     [self.itemsArray addObject:@"OpenGraph"];
     [self.itemsArray addObject:@"Pages"];
     [self.itemsArray addObject:@"Albums"];
+    [self.itemsArray addObject:@"Events"];
 }
 
 - (void)viewDidUnload
@@ -195,6 +197,20 @@
                       @"Post Photo in album", nil];
     self.albumSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
     [self.albumSheet showFromRect:self.view.bounds inView:self.view animated:YES];
+}
+
+- (void)publishEvents
+{
+    self.eventSheet = [[UIActionSheet alloc]
+                       initWithTitle:@"Option Events"
+                       delegate:self
+                       cancelButtonTitle:nil
+                       destructiveButtonTitle:@"Cancel"
+                       otherButtonTitles:
+                       @"Get Events",
+                       @"Get EventId", nil];
+    self.eventSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+    [self.eventSheet showFromRect:self.view.bounds inView:self.view animated:YES];
 }
 
 - (void)publishOpenGraph
@@ -535,6 +551,35 @@
         }
     }
     
+    else if (self.eventSheet == actionSheet){
+        
+        switch (buttonIndex) {
+                
+                //Get Events
+            case 1:{
+                loadingView.hidden = NO;
+                [SCFacebook getEventsCallBack:^(BOOL success, id result) {
+                    loadingView.hidden = YES;
+                    Alert(@"Alert", [result description]);
+                }];
+            }
+                break;
+                
+                //Get EventId
+            case 2:{
+                loadingView.hidden = NO;
+                [SCFacebook getAlbumById:@"521306387981412" callBack:^(BOOL success, id result) {
+                    loadingView.hidden = YES;
+                    Alert(@"Alert", [result description]);
+                }];
+            }
+                break;
+                
+            default:
+                break;
+        }
+    }
+    
     //Open graph
     else if (self.openGraphSheet == actionSheet){
         switch (buttonIndex) {
@@ -603,6 +648,8 @@
         [self publishPageWall];
     }else if (indexPath.row == 8) {
         [self publishAlbums];
+    }else if (indexPath.row == 9) {
+        [self publishEvents];
     }
 }
 

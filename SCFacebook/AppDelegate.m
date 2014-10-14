@@ -30,7 +30,8 @@
                                       @"user_friends",
                                       @"manage_pages",
                                       @"user_videos",
-                                      @"public_profile"]];
+                                      @"public_profile",
+                                      @"user_events"]];
     
     return YES;
 }

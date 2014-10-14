@@ -575,6 +575,31 @@
     [SCFacebook graphFacebookForMethodPOST:[NSString stringWithFormat:@"%@/photos", albumId] params:@{@"source": UIImagePNGRepresentation(photo)} callBack:callBack];
 }
 
+- (void)getEventsCallBack:(SCFacebookCallback)callBack
+{
+    if (![self isSessionValid]) {
+        callBack(NO, @"Not logged in");
+        return;
+    }
+    
+    [self graphFacebookForMethodGET:@"me/events" params:nil callBack:callBack];
+}
+
+- (void)getEventById:(NSString *)eventId callBack:(SCFacebookCallback)callBack
+{
+    if (![self isSessionValid]) {
+        callBack(NO, @"Not logged in");
+        return;
+    }
+    
+    if (!eventId) {
+        callBack(NO, @"Event id required");
+        return;
+    }
+    
+    [SCFacebook graphFacebookForMethodGET:eventId params:nil callBack:callBack];
+}
+
 - (void)sendForPostOpenGraphPath:(NSString *)path graphObject:(NSMutableDictionary<FBOpenGraphObject> *)openGraphObject objectName:(NSString *)objectName callBack:(SCFacebookCallback)callBack
 {
     if (![self isSessionValid]) {
@@ -803,6 +828,16 @@
 + (void)feedPostForAlbumId:(NSString *)albumId photo:(UIImage *)photo callBack:(SCFacebookCallback)callBack
 {
     [[SCFacebook shared] feedPostForAlbumId:albumId photo:photo callBack:callBack];
+}
+
++ (void)getEventsCallBack:(SCFacebookCallback)callBack
+{
+    [[SCFacebook shared] getEventsCallBack:callBack];
+}
+
++ (void)getEventById:(NSString *)eventId callBack:(SCFacebookCallback)callBack
+{
+    [[SCFacebook shared] getEventById:eventId callBack:callBack];
 }
 
 + (void)sendForPostOpenGraphPath:(NSString *)path graphObject:(NSMutableDictionary<FBOpenGraphObject> *)openGraphObject objectName:(NSString *)objectName callBack:(SCFacebookCallback)callBack

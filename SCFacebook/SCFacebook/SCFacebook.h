@@ -397,6 +397,29 @@ typedef NS_ENUM(NSInteger, FBAlbumPrivacyType) {
 + (void)feedPostForAlbumId:(NSString *)albumId photo:(UIImage *)photo callBack:(SCFacebookCallback)callBack;
 
 /**
+ *  Get events in user
+ *
+ *  https://developers.facebook.com/docs/graph-api/reference/v2.1/user/events
+ *
+ *  Permissions required: user_events
+ *
+ *  @param callBack (BOOL success, id result)
+ */
++ (void)getEventsCallBack:(SCFacebookCallback)callBack;
+
+/**
+ *  Get album with id
+ *
+ *  https://developers.facebook.com/docs/graph-api/reference/v2.1/event
+ *
+ *  Permissions required: user_events
+ *
+ *  @param albumId  NSString
+ *  @param callBack (BOOL success, id result)
+ */
++ (void)getEventById:(NSString *)eventId callBack:(SCFacebookCallback)callBack;
+
+/**
  *  Post open graph 
  *
  *  Open Graph lets apps tell stories on Facebook through a structured, strongly typed API. When people engage with these stories they are directed to your app or, if they don't have your app installed, to your app's App Store page, driving engagement and distribution for your app.
