@@ -585,6 +585,23 @@
     [self graphFacebookForMethodGET:@"me/events" params:nil callBack:callBack];
 }
 
+- (void)getEventsSinceDate:(NSDate*)date ofType:(NSString*)type CallBack:(SCFacebookCallback)callBack
+{
+    if (![self isSessionValid]) {
+        callBack(NO, @"Not logged in");
+        return;
+    }
+    
+    if (!date) {
+        callBack(NO, @"No date specified");
+        return;
+    }
+    
+    NSInteger dateTimestamp = [date timeIntervalSince1970];
+    
+    [self graphFacebookForMethodGET:[NSString stringWithFormat:@"me/events/%@?since=%d", type, dateTimestamp] params:nil callBack:callBack];
+}
+
 - (void)getEventById:(NSString *)eventId callBack:(SCFacebookCallback)callBack
 {
     if (![self isSessionValid]) {
@@ -833,6 +850,11 @@
 + (void)getEventsCallBack:(SCFacebookCallback)callBack
 {
     [[SCFacebook shared] getEventsCallBack:callBack];
+}
+
++ (void)getEventsSinceDate:(NSDate*)date ofType:(NSString*)type CallBack:(SCFacebookCallback)callBack
+{
+    [[SCFacebook shared] getEventsSinceDate:date ofType:type CallBack:callBack];
 }
 
 + (void)getEventById:(NSString *)eventId callBack:(SCFacebookCallback)callBack

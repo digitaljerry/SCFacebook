@@ -407,6 +407,8 @@ typedef NS_ENUM(NSInteger, FBAlbumPrivacyType) {
  */
 + (void)getEventsCallBack:(SCFacebookCallback)callBack;
 
++ (void)getEventsSinceDate:(NSDate*)date ofType:(NSString*)type CallBack:(SCFacebookCallback)callBack;
+
 /**
  *  Get album with id
  *
