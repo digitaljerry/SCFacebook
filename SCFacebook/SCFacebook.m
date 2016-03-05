@@ -903,7 +903,8 @@
 
 + (void)sendForPostOpenGraphPath:(NSString *)path graphObject:(NSMutableDictionary<FBOpenGraphObject> *)openGraphObject objectName:(NSString *)objectName callBack:(SCFacebookCallback)callBack
 {
-    [[SCFacebook shared] sendForPostOpenGraphPath:path graphObject:openGraphObject objectName:objectName callBack:callBack];
+    [[SCFacebook shared] sendForPostOpenGraphWithActionType:@"" graphObject:openGraphObject objectName:objectName viewController:nil callBack:callBack];
+    //[[SCFacebook shared] sendForPostOpenGraphPath:path graphObject:openGraphObject objectName:objectName callBack:callBack];
 }
 
 + (void)sendForPostOpenGraphWithActionType:(NSString *)actionType graphObject:(FBSDKShareOpenGraphObject *)openGraphObject objectName:(NSString *)objectName viewController:(UIViewController *)viewController callBack:(SCFacebookCallback)callBack
